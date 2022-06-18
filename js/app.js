@@ -27,7 +27,26 @@ class jobItem{
     }
 }
 
-const jobPost = new jobItem("", "", "", "", "", "", "", "", "", "", "",)
+let arrTest = []
 
+let submitJobBtn = window.document.getElementById("submitJobBtn")
+
+submitJobBtn = window.document.addEventListener("click", () => {
+    let company =  window.document.getElementById('company').value
+    let logo =  window.document.getElementById('logo').value
+    let newPost =  window.document.getElementById('newPost').value
+    let position =  window.document.getElementById('position').value
+    let role =  window.document.getElementById('role').value
+    let level =  window.document.getElementById('level').value
+    let postedAt =  window.document.getElementById('postedAt').value
+    let contract =  window.document.getElementById('contract').value
+    let languages =  window.document.getElementById('languages').value
+    let tools =  window.document.getElementById('tools').value
+
+    arrTest.push(company)
+    console.log(arrTest)
+
+    const jobPost = new jobItem(company, logo, newPost, position, role, level, postedAt, contract, languages, tools)
+})
 
 
