@@ -1,52 +1,70 @@
-
-class jobItem{
+class JobPost{
     constructor(
-        company,
-        logo,
-        newPost,
+        company, 
+        logo, 
+        newPost, 
         position,
         role,
         level,
-        postedAt,
         contract,
         locationJob,
         languages,
         tools
-    ){
+        ){
         this._company = company
         this._logo = logo
         this._newPost = newPost
         this._position = position
         this._role = role
         this._level = level
-        this._postedAt = postedAt
         this._contract = contract
         this._locationJob = locationJob
         this._languages = languages
         this._tools = tools
     }
+
+    postedAt(){
+        const date = new Date().getDate()
+        return date
+    }
 }
 
-let arrTest = []
+let display = document.getElementById('display')
+let submitJobBtn = document.getElementById("submitJobBtn")
 
-let submitJobBtn = window.document.getElementById("submitJobBtn")
+submitJobBtn.addEventListener("click", () => {
+    let company = document.getElementById('company').value
+    let logo = document.getElementById('logo').value
+    let newPost = document.getElementById('newPost').value
+    let position = document.getElementById('position').value
+    let role = document.getElementById('role').value
+    let level = document.getElementById('level').value
+    let contract = document.getElementById('contract').value
+    let locationJob = document.getElementById('locationJob').value
+    let languages = document.getElementById('languages').value
+    let tools = document.getElementById('tools').value
 
-submitJobBtn = window.document.addEventListener("click", () => {
-    let company =  window.document.getElementById('company').value
-    let logo =  window.document.getElementById('logo').value
-    let newPost =  window.document.getElementById('newPost').value
-    let position =  window.document.getElementById('position').value
-    let role =  window.document.getElementById('role').value
-    let level =  window.document.getElementById('level').value
-    let postedAt =  window.document.getElementById('postedAt').value
-    let contract =  window.document.getElementById('contract').value
-    let languages =  window.document.getElementById('languages').value
-    let tools =  window.document.getElementById('tools').value
+    const post = new JobPost(
+        company, 
+        logo, 
+        newPost, 
+        position,
+        role,
+        position,
+        level,
+        contract,
+        locationJob,
+        languages,
+        tools
+        )
 
-    arrTest.push(company)
-    console.log(arrTest)
-
-    const jobPost = new jobItem(company, logo, newPost, position, role, level, postedAt, contract, languages, tools)
+    let jobData = document.createElement('div')
+    jobData.innerHTML = `
+        <p>${post._company}</p>
+        <p>${post._role}</>
+        <p>${post._contract}</>
+        <p>${post._locationJob}</>
+        <p>${post.postedAt()}</>
+    `
+    display.append(jobData)
 })
-
-
