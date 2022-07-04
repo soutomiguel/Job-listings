@@ -1,70 +1,76 @@
-class JobPost{
-    constructor(
-        company, 
-        logo, 
-        newPost, 
-        position,
-        role,
-        level,
-        contract,
-        locationJob,
-        languages,
-        tools
-        ){
-        this._company = company
-        this._logo = logo
-        this._newPost = newPost
-        this._position = position
-        this._role = role
-        this._level = level
-        this._contract = contract
-        this._locationJob = locationJob
-        this._languages = languages
-        this._tools = tools
-    }
+let allPositons = document.getElementById("positions");
+let trendPositions = document.getElementById("trends");
+let trends = [];
 
-    postedAt(){
-        const date = new Date().getDate()
-        return date
+LoadTrends()
+showPositions()
+showTrends()
+
+function LoadTrends() {
+    if (localStorage.getItem("StorageTrends") !== null) {
+        trends = JSON.parse(localStorage.getItem("StorageTrends"));
+        return;
+    } else {
+        localStorage.setItem("StorageTrends", JSON.stringify(trends));
+        return;
     }
 }
 
-let display = document.getElementById('display')
-let submitJobBtn = document.getElementById("submitJobBtn")
+function showPositions() {
+    position.forEach((pos) => {
+        allPositons.innerHTML += `
+    <div class="card bg-light m-3">
+        <p>${pos.company}</p>
+        <p>${pos.logo}</p>
+        <p>${pos.newPost}</p>
+        <p>${pos.position}</p>
+        <p>${pos.role}</p>
+        <p>${pos.level}</p>
+        <p>${pos.contract}</p>
+        <p>${pos.location}</p>
+        <p>${pos.tools}</p>
+        <p>${pos.languages}</p>
+        <button onClick="trendPosition(${pos.id})" class="btn btn-outline-success">Set as trend</button>
+    </div>`
+    });
+}
 
-submitJobBtn.addEventListener("click", () => {
-    let company = document.getElementById('company').value
-    let logo = document.getElementById('logo').value
-    let newPost = document.getElementById('newPost').value
-    let position = document.getElementById('position').value
-    let role = document.getElementById('role').value
-    let level = document.getElementById('level').value
-    let contract = document.getElementById('contract').value
-    let locationJob = document.getElementById('locationJob').value
-    let languages = document.getElementById('languages').value
-    let tools = document.getElementById('tools').value
+function showTrends() {
+    trends.forEach((trends) => {
+        trendPositions.innerHTML += `
+    <div class="card bg-light m-3">
+        <p>${trends.company}</p>
+        <p>${trends.logo}</p>
+        <p>${trends.newPost}</p>
+        <p>${trends.position}</p>
+        <p>${trends.role}</p>
+        <p>${trends.level}</p>
+        <p>${trends.contract}</p>
+        <p>${trends.location}</p>
+        <p>${trends.tools}</p>
+        <p>${trends.languages}</p>
+        <button onClick="quitAsTrend${trends.id})" class="btn btn-outline-danger">No more trend</button>
+    </div>`
+    });
+}
 
-    const post = new JobPost(
-        company, 
-        logo, 
-        newPost, 
-        position,
-        role,
-        position,
-        level,
-        contract,
-        locationJob,
-        languages,
-        tools
-        )
+function trendPosition(id) {
+    let index = id - 1;
+    let selectedCard = {};
+    selectedCard = position[index];
+    if (!trends.some(e => e.id === id)) {
+        trends.push(selectedCard);
+        localStorage.setItem("StorageTrends", JSON.stringify(trends));
+        location.reload()
+    } else {
+        alert("This post is set as trend")
+    }
+}
 
-    let jobData = document.createElement('div')
-    jobData.innerHTML = `
-        <p>${post._company}</p>
-        <p>${post._role}</>
-        <p>${post._contract}</>
-        <p>${post._locationJob}</>
-        <p>${post.postedAt()}</>
-    `
-    display.append(jobData)
-})
+function quitAsTrend(id) {
+    let filtredTrend = trends.filter((el) => el.id != id);
+    trends = filtredTrend;
+    localStorage.setItem("StorageTrends", JSON.stringify(trends));
+    console.log(filtredTrend);
+    location.reload();
+}
